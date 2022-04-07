@@ -111,6 +111,6 @@ if __name__ == '__main__':
             # for faster computation and progress report, convert to dask
             ds.to_dask_dataframe()
             # making use of chunkwise computation as ds is very big
-            delayed_ds = ds.to_netcdf(f"{model}_{experiment}_{member}.nc", format='netCDF4', engine='netcdf4', compute=False)
+            delayed_ds = ds.to_netcdf(f"data/{model}_{experiment}_{member}.nc", format='netCDF4', engine='netcdf4', compute=False)
             with ProgressBar():
               results = delayed_ds.compute()
