@@ -40,7 +40,7 @@ fi
 
 # 5. Copy data and code from scratch to $SLURM_TMPDIR/
 
-cp -r  $SLURM_TMPDIR/
+cp -r /network/scratch/c/charlotte.lange/ClimateBench/  $SLURM_TMPDIR/
 #rm -r $SLURM_TMPDIR/caiclone/results/
 #cp -r /network/scratch/j/julia.kaltenborn/data/ $SLURM_TMPDIR/
 
@@ -51,18 +51,17 @@ export CUDA_VISIBLE_DEVICES=0
 
 # 7. Change working directory to $SLURM_TMPDIR
 
-cd $SLURM_TMPDIR/caiclone/
+cd $SLURM_TMPDIR/ClimateBench/
 
 # 8. Run Python
 
-echo "Running python caiclone_predictor.py ..."
-python caiclone_predictor.py -m $MODEL -e $EPOCHS -b $BATCH_SIZE -l $LEARNING_RATE -i $SLURM_TMPDIR/data/precursor_vort_64x64.npy -t $SLURM_TMPDIR/data/labels_vort_64x64.npy
+echo "Running python prepare_data.py ..."
+python prepare_data.py
 
 
 # 9. Copy output to scratch
-cp -r $SLURM_TMPDIR/caiclone/results/* /network/scratch/j/julia.kaltenborn/caiclone/results/
-
+cp -r $SLURM_TMPDIR/ClimateBench/data/* /network/scratch/c/charlotte.lange/ClimateBench/data/
 
 # 10. Experiment is finished
 
-echo "Experiment with $EPOCHS epochs, $BATCH_SIZE batch size, $LEARNING_RATE learning rate and $MODEL model is concluded."
+echo "Done."
