@@ -24,7 +24,6 @@ def un_normalize_ch4(data):
     return data * max_ch4
 
 
-# TODO we need a second version of this for non-random-forest methods
 def create_predictor_data(data_sets, n_eofs=5, test=False):
     """
     Args:
@@ -36,7 +35,11 @@ def create_predictor_data(data_sets, n_eofs=5, test=False):
         data_path = TEST_PATH
     else:
         data_path = TRAIN_PATH
+        
     # Create training and testing arrays
+    if isinstance(data_sets, str):
+        data_sets = [data_sets]
+    
     X = xr.concat([xr.open_dataset(data_path + f"inputs_{file}.nc") for file in data_sets], dim='time')
     X = X.assign_coords(time=np.arange(len(X.time)))
 
@@ -97,7 +100,6 @@ def get_test_data(file, eof_solvers, n_eofs=5):
     inputs = pd.concat([inputs, bc_df, so2_df], axis=1)
     return inputs
 
-
 def create_predictdand_data(data_sets, test=False):
     """
     Args:
@@ -108,6 +110,9 @@ def create_predictdand_data(data_sets, test=False):
         data_path = TEST_PATH
     else:
         data_path = TRAIN_PATH
+        
+    if isinstance(data_sets, str):
+        data_sets = [data_sets]
 
     Y = xr.concat([xr.open_dataset(data_path + f"outputs_{file}.nc") for file in data_sets], dim='time').mean("member")
     # Convert the precip values to mm/day
