@@ -4,7 +4,7 @@
 
 #SBATCH --mem=32G                                        # specify memory
 
-#SBATCH --time=08:00:00                                  # set runtime
+#SBATCH --time=10:00:00                                  # set runtime
 
 #SBATCH -o /home/mila/c/charlotte.lange/slurm-%j.out        # set log dir to home
 

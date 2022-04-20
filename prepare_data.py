@@ -15,10 +15,19 @@ from dask.diagnostics import ProgressBar
 overwrite = False
 
 model = 'NorESM2-LM'
+# only download missing files
+"""
 experiments = [
                '1pctCO2', 'abrupt-4xCO2', 'historical', 'piControl', # CMIP
                'hist-GHG', 'hist-aer', # DAMIP
                'ssp126', 'ssp245', 'ssp370', 'ssp370-lowNTCF', 'ssp585' #	ScenarioMIP
+]
+"""
+experiments = [
+                '1pctCO2', 'abrupt-4xCO2', 'historical', 'piControl', # CMIP
+                'hist-aer', # DAMIP
+                'ssp370-lowNTCF', 'ssp585' #	ScenarioMIP
+
 ]
 variables = [
              'tas', 'tasmin', 'tasmax', 'pr'
@@ -107,10 +116,15 @@ if __name__ == '__main__':
                              'pr': pr.groupby('time.year').mean('time'),
                              'pr90': pr.groupby('time.year').quantile(0.9, skipna=True)})
             print('obtained ds')
-            print(ds)
+            #print(ds)
+
             # for faster computation and progress report, convert to dask
+            """
             ds.to_dask_dataframe()
             # making use of chunkwise computation as ds is very big
             delayed_ds = ds.to_netcdf(f"data/{model}_{experiment}_{member}.nc", compute=False)
-            with ProgressBar():
-              results = delayed_ds.compute()
+            #with ProgressBar():
+                results = delayed_ds.compute()
+            """
+
+            ds.to_netcdf(f"data/{model}_{experiment}_{member}.nc")
