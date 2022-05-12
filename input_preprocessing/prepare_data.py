@@ -72,8 +72,7 @@ if __name__ == '__main__':
     #print(client)
     print("starting")
     # Cache the full catalogue from NorESG
-    # !! origina link (http://noresg.nird.sigma2.no/thredds/catalog/esgcet/catalog.xml) not working !!
-    full_catalog = catalog.TDSCatalog('http://esgf.nci.org.au/thredds/catalog/esgcet/catalog.xml')
+    full_catalog = catalog.TDSCatalog('http://noresg.nird.sigma2.no/thredds/catalog/esgcet/catalog.xml')
     print("Read full catalogue")
     #Loop over experiments and members creating one (annual mean) file with all variables in for each one
     for experiment in tqdm(experiments):
